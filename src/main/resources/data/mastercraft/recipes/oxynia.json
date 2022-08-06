@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "mastercraft:raw_oxynia"
+  },
+  "result": "mastercraft:oxynia",
+  "experience": 0.35,
+  "cookingtime": 210
+}

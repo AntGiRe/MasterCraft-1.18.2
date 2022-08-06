@@ -1,10 +1,14 @@
 package net.antgire.mastercraft;
 
 import com.mojang.logging.LogUtils;
+import net.antgire.mastercraft.block.ModBlocks;
+import net.antgire.mastercraft.item.ModItems;
+import net.antgire.mastercraft.world.OreFeature;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.common.Mod;
@@ -27,8 +31,13 @@ public class MasterCraft
 
     public MasterCraft()
     {
-        // Register the setup method for modloading
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        ModItems.register(eventBus);
+        ModBlocks.register(eventBus);
+
+        eventBus.addListener(this::setup);
+        MinecraftForge.EVENT_BUS.addListener(OreFeature::onBiomeLoadingEvent);
 
         // Register ourselves for server and other game events we are interested in
         MinecraftForge.EVENT_BUS.register(this);
@@ -36,8 +45,8 @@ public class MasterCraft
 
     private void setup(final FMLCommonSetupEvent event)
     {
-        // some preinit code
-        LOGGER.info("HELLO FROM PREINIT");
-        LOGGER.info("DIRT BLOCK >> {}", Blocks.DIRT.getRegistryName());
+        event.enqueueWork(() -> {
+            OreFeature.registerOreFeatures();
+        });
     }
 }
