@@ -23,6 +23,9 @@ public class ModBlocks {
     public static final RegistryObject<Block> OXYNIA_BLOCK = registerBlock("oxynia_block", () -> new Block(BlockBehaviour.Properties.of(Material.METAL)
             .strength(4f).requiresCorrectToolForDrops()), CreativeTab.MASTER_TAB);
 
+    public static final RegistryObject<Block> DEEPSLATE_OXYNIA = registerBlock("deepslate_oxynia", () -> new Block(BlockBehaviour.Properties.of(Material.METAL)
+            .strength(4f).requiresCorrectToolForDrops()), CreativeTab.MASTER_TAB);
+
     private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab)
     {
         RegistryObject<T> toReturn = BLOCKS.register(name,block);

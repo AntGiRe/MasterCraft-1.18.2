@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "mastercraft:oxynia_block"
+    "mastercraft:oxynia_block",
+    "mastercraft:deepslate_oxynia"
   ]
 }

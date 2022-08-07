@@ -16,13 +16,20 @@ import net.minecraftforge.event.world.BiomeLoadingEvent;
 
 public class OreFeature {
     public static Holder<PlacedFeature> OVERWORLD_OREGEN;
+    public static Holder<PlacedFeature> DEEPSLATE_OREGEN;
     public static void registerOreFeatures() {
-        OreConfiguration overworldConfig = new OreConfiguration(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.OXYNIA_BLOCK.get().defaultBlockState(), 20);
+        OreConfiguration overworldConfig = new OreConfiguration(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.OXYNIA_BLOCK.get().defaultBlockState(), 6);
         OVERWORLD_OREGEN = registerPlacedOreFeature("overworld_oxynia_block", new ConfiguredFeature<>(Feature.ORE, overworldConfig),
                 CountPlacement.of(3),
                 InSquarePlacement.spread(),
                 BiomeFilter.biome(),
-                HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(40)));
+                HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(25)));
+        OreConfiguration overworld_deep_Config = new OreConfiguration(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.DEEPSLATE_OXYNIA.get().defaultBlockState(), 6);
+        DEEPSLATE_OREGEN = registerPlacedOreFeature("overworld_deepslate_oxynia", new ConfiguredFeature<>(Feature.ORE, overworld_deep_Config),
+                CountPlacement.of(3),
+                InSquarePlacement.spread(),
+                BiomeFilter.biome(),
+                HeightRangePlacement.triangle(VerticalAnchor.absolute(-64), VerticalAnchor.absolute(10)));
     }
 
     private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<PlacedFeature> registerPlacedOreFeature(String registryName, ConfiguredFeature<C, F> feature, PlacementModifier... placementModifiers) {
@@ -34,6 +41,7 @@ public class OreFeature {
         } else if (event.getCategory() == Biome.BiomeCategory.THEEND) {
         } else {
             event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, OVERWORLD_OREGEN);
+            event.getGeneration().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, DEEPSLATE_OREGEN);
         }
     }
 }
